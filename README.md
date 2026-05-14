@@ -4,8 +4,7 @@ Demo project showing AI visual regression testing using [Applitools Eyes](https:
 
 ## Demo
 
-<!-- Replace with Vimeo link once recorded -->
-> Video walkthrough coming soon.
+[Watch on Vimeo](https://vimeo.com/1192265401)
 
 ## What it does
 
@@ -15,10 +14,6 @@ Demo project showing AI visual regression testing using [Applitools Eyes](https:
 | `loginPageRegression` | Injects a CSS change to simulate a visual regression (button colour changed by a bad deploy). Applitools flags the diff against the baseline. |
 
 On first run, Applitools marks snapshots as **New** (baseline established). After approval, subsequent runs compare against the baseline — any change is flagged as **Unresolved** with the diff highlighted by the Visual AI engine.
-
-## Why use it?
-
-Deterministic 
 
 ## Prerequisites
 
