@@ -9,7 +9,7 @@ import org.testng.annotations.Test;
 
 import java.time.Duration;
 
-public class PlexVisualTest extends BaseTest {
+public class VisualTest extends BaseTest {
 
     @Test(description = "Baseline: login page renders correctly")
     public void loginPageBaseline() {
