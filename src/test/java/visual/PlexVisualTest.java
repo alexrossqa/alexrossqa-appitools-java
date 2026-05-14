@@ -11,45 +11,30 @@ import java.time.Duration;
 
 public class PlexVisualTest extends BaseTest {
 
-    /**
-     * Positive test: establishes the Applitools baseline on first run.
-     * Subsequent runs compare against this snapshot — any unintended change will be flagged.
-     */
-    @Test(description = "Baseline: film detail page renders correctly")
-    public void filmDetailBaseline() {
-        navigateToFilm();
+    @Test(description = "Baseline: login page renders correctly")
+    public void loginPageBaseline() {
+        driver.get("https://demo.applitools.com");
+        new WebDriverWait(driver, Duration.ofSeconds(10))
+            .until(ExpectedConditions.presenceOfElementLocated(By.id("log-in")));
 
-        eyes.open(driver, "Plex", "Film Detail - Baseline");
-        eyes.check(Target.window().fully().withName("Film detail page"));
+        eyes.open(driver, "Demo App", "Login Page - Baseline");
+        eyes.check(Target.window().fully().withName("Login page"));
         eyes.closeAsync();
     }
 
-    /**
-     * Negative test: replaces the film poster via JavaScript to simulate a visual regression.
-     * Applitools Visual AI compares against the baseline and flags the diff.
-     */
-    @Test(description = "Regression: visual diff detected after poster is replaced")
-    public void filmDetailPosterChanged() {
-        navigateToFilm();
+    @Test(description = "Regression: visual diff detected after button colour changes")
+    public void loginPageRegression() {
+        driver.get("https://demo.applitools.com");
+        new WebDriverWait(driver, Duration.ofSeconds(10))
+            .until(ExpectedConditions.presenceOfElementLocated(By.id("log-in")));
 
-        // Swap the poster src — simulates a broken image path or unintended asset change
         ((JavascriptExecutor) driver).executeScript(
-            "var posters = document.querySelectorAll('img[src*=\"/library/metadata\"]');" +
-            "if (posters.length > 0) {" +
-            "  posters[0].src = 'https://placehold.co/300x450/CC0000/FFFFFF?text=BROKEN';" +
-            "}"
+            "document.getElementById('log-in').style.backgroundColor = '#FF0000';" +
+            "document.getElementById('log-in').style.color = '#FFFFFF';"
         );
 
-        eyes.open(driver, "Plex", "Film Detail - Poster Changed");
-        eyes.check(Target.window().fully().withName("Film detail after poster swap"));
+        eyes.open(driver, "Demo App", "Login Page - Baseline");
+        eyes.check(Target.window().fully().withName("Login page after regression"));
         eyes.closeAsync();
-    }
-
-    private void navigateToFilm() {
-        driver.get(config.getProperty("plex.film.url"));
-        new WebDriverWait(driver, Duration.ofSeconds(15))
-            .until(ExpectedConditions.presenceOfElementLocated(
-                By.cssSelector("img[src*='/library/metadata']")
-            ));
     }
 }

@@ -7,7 +7,6 @@ import com.applitools.eyes.selenium.ClassicRunner;
 import com.applitools.eyes.selenium.Configuration;
 import com.applitools.eyes.selenium.Eyes;
 import io.github.bonigarcia.wdm.WebDriverManager;
-import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.annotations.*;
@@ -29,12 +28,12 @@ public class BaseTest {
     @BeforeSuite
     public static void setUpSuite() {
         runner = new ClassicRunner();
-        batch = new BatchInfo("Plex Visual Tests");
+        batch = new BatchInfo("Visual Regression Demo");
 
         eyesConfig = new Configuration();
         eyesConfig.setApiKey(System.getenv("APPLITOOLS_API_KEY"));
         eyesConfig.setBatch(batch);
-        eyesConfig.setAppName("Plex");
+        eyesConfig.setAppName("Demo App");
         eyesConfig.setViewportSize(new RectangleSize(1280, 800));
     }
 
@@ -48,8 +47,6 @@ public class BaseTest {
         WebDriverManager.chromedriver().setup();
         driver = new ChromeDriver();
         driver.manage().window().maximize();
-
-        authenticatePlex();
 
         eyes = new Eyes(runner);
         eyes.setConfiguration(eyesConfig);
@@ -65,16 +62,5 @@ public class BaseTest {
     public static void tearDownSuite() {
         TestResultsSummary results = runner.getAllTestResults(false);
         System.out.println(results);
-    }
-
-    // Injects the Plex token into localStorage so Selenium's fresh Chrome session is authenticated.
-    private void authenticatePlex() {
-        String plexUrl = config.getProperty("plex.url");
-        String token = config.getProperty("plex.token");
-        driver.get(plexUrl + "/web/index.html");
-        ((JavascriptExecutor) driver).executeScript(
-            "localStorage.setItem('myPlexAccessToken', arguments[0]);", token
-        );
-        driver.navigate().refresh();
     }
 }
