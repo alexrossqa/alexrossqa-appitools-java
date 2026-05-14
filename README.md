@@ -16,6 +16,10 @@ Demo project showing AI visual regression testing using [Applitools Eyes](https:
 
 On first run, Applitools marks snapshots as **New** (baseline established). After approval, subsequent runs compare against the baseline — any change is flagged as **Unresolved** with the diff highlighted by the Visual AI engine.
 
+## Why use it?
+
+Deterministic 
+
 ## Prerequisites
 
 - Java 11+
