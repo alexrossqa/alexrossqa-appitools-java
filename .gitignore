@@ -1,0 +1,6 @@
+target/
+.idea/
+*.iml
+
+# Never commit real config — use config.properties.template
+src/test/resources/config.properties
